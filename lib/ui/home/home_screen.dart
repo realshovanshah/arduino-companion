@@ -8,6 +8,7 @@ import 'package:task_weplay/ui/auth/profile_screen.dart';
 import 'package:task_weplay/ui/home/dustbin_screen.dart';
 import 'package:task_weplay/ui/upload/upload_screen.dart';
 
+import '../auth/profile_screen.dart';
 import 'default.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -94,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _buildScreens() {
     return [
       ProfileScreen(),
+      // Container(),
       DefaultScreen(),
       DustbinScreen(),
     ];

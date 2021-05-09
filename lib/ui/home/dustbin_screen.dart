@@ -130,7 +130,7 @@ class _DustbinScreenState extends State<DustbinScreen> {
                           });
                         }
                       },
-                      textColor: Colors.blue,
+                      textColor: Theme.of(context).accentColor,
                       child: Text('Cancel')),
                   FlatButton(
                       onPressed: () {
@@ -151,7 +151,7 @@ class _DustbinScreenState extends State<DustbinScreen> {
                           ));
                         }
                       },
-                      textColor: Colors.blue,
+                      textColor: Theme.of(context).accentColor,
                       child: Text('Update')),
                   RaisedButton(
                       onPressed: () {
@@ -160,7 +160,7 @@ class _DustbinScreenState extends State<DustbinScreen> {
                         // _selectedItems.clear();
                         // _selectedImageList.clear();
                       },
-                      color: Colors.blue,
+                      color: Theme.of(context).accentColor,
                       textColor: Colors.white,
                       child: Text('Delete')),
                   SizedBox(width: 20)
@@ -189,7 +189,7 @@ class _DustbinScreenState extends State<DustbinScreen> {
                       ],
                     ),
                   ),
-                  color: Colors.blue,
+                  color: Theme.of(context).accentColor,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
@@ -253,8 +253,8 @@ class _ImageListItemState extends State<ImageListItem> {
         alignment: Alignment.center,
         height: 150,
         color: (widget._selectedItems.contains(widget.index))
-            ? Colors.blue.withOpacity(0.7)
-            : Colors.blue.withOpacity(0.2),
+            ? Theme.of(context).accentColor.withOpacity(0.7)
+            : Theme.of(context).accentColor.withOpacity(0.2),
         child: ListTile(
           trailing: Icon(Icons.opacity, color: Colors.black),
           leading: (widget.imageModel.imageUrl == null)

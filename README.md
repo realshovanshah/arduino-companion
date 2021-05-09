@@ -1,6 +1,6 @@
-# task_weplay
+# aurdino-companion
 
-A new Flutter project.
+A flutter app to manages data taken from the remote arduino device. Uses firebase as a backend 
 
 ## Getting Started
 
