@@ -50,15 +50,19 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _password,
       );
       try {
-        String userId = _formType == FormType.login
-            ? await widget.auth.signIn(userModel.email, userModel.password)
-            : await widget.auth.createUser(userModel);
-        setState(() {
-          _authHint = 'Signed In\n\nUser id: $userId';
-        });
-        widget.onSignIn(userId);
-        print('lmao');
-        print(userId);
+        if (_dustbinId == '2389') {
+          String userId = _formType == FormType.login
+              ? await widget.auth.signIn(userModel.email, userModel.password)
+              : await widget.auth.createUser(userModel);
+          setState(() {
+            _authHint = 'Signed In\n\nUser id: $userId';
+          });
+          widget.onSignIn(userId);
+        } else {
+          setState(() {
+            _authHint = 'No dustbin with id $_dustbinId found';
+          });
+        }
       } catch (e) {
         setState(() {
           _authHint = 'Sign In Error\n\n${e.toString()}';
