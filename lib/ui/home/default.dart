@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:task_weplay/services/auth_service.dart';
+import 'package:smart_dustbin/services/auth_service.dart';
 
 class DefaultScreen extends StatelessWidget {
   const DefaultScreen({Key key}) : super(key: key);

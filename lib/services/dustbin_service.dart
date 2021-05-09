@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:task_weplay/models/image_model.dart';
-import 'package:task_weplay/utilities/constants.dart';
+import 'package:smart_dustbin/models/image_model.dart';
+import 'package:smart_dustbin/utilities/constants.dart';
 
 class ImageService {
   final _storageSnapshot =

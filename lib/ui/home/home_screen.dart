@@ -1,15 +1,15 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:task_weplay/ui/auth/profile_screen.dart';
-import 'package:task_weplay/ui/home/dustbin_screen.dart';
-import 'package:task_weplay/ui/upload/upload_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_dustbin/ui/home/dustbin_screen.dart';
 
+import '../../models/user_model.dart';
+import '../../services/auth_service.dart';
 import '../auth/profile_screen.dart';
 import 'default.dart';
+import 'dustbin_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.firebaseAuth}) : super(key: key);
@@ -22,11 +22,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PersistentTabController _controller;
-
+  Future<UserModel> userModel;
   @override
   void initState() {
-    _controller = PersistentTabController(initialIndex: 1);
     super.initState();
+    _controller = PersistentTabController(initialIndex: 1);
+    print('eta');
+    final uid = SharedPreferences.getInstance()
+        .then((value) => (value.getString('uid')));
+
+    userModel = uid.then(
+      (value) => AuthService(widget.firebaseAuth).getCurrentUser(value),
+    );
+
+    // user = user.then((value) => userModel = value);
+    // .then((value) => userModel = value);
+    print(uid);
+    // print(user);
   }
 
   @override
@@ -94,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      ProfileScreen(),
+      ProfileScreen(userModel: userModel),
       // Container(),
       DefaultScreen(),
       DustbinScreen(),

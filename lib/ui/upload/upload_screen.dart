@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:task_weplay/bloc/dustbin_bloc.dart';
-import 'package:task_weplay/utilities/utils.dart';
+import 'package:smart_dustbin/bloc/dustbin_bloc.dart';
+import 'package:smart_dustbin/utilities/utils.dart';
 
 class UploadScreen extends StatefulWidget {
   UploadScreen({Key key, this.text}) : super(key: key);

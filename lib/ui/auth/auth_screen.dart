@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_weplay/models/user_model.dart';
-import 'package:task_weplay/services/auth_service.dart';
+import 'package:smart_dustbin/models/user_model.dart';
+import 'package:smart_dustbin/services/auth_service.dart';
 
 import '../../utilities/primary_button.dart';
 
@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 
   final String title;
   final BaseAuth auth;
-  final VoidCallback onSignIn;
+  final ValueSetter<String> onSignIn;
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -56,7 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _authHint = 'Signed In\n\nUser id: $userId';
         });
-        widget.onSignIn();
+        widget.onSignIn(userId);
+        print('lmao');
+        print(userId);
       } catch (e) {
         setState(() {
           _authHint = 'Sign In Error\n\n${e.toString()}';

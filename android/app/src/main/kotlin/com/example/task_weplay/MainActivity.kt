@@ -1,4 +1,4 @@
-package com.example.task_weplay
+package com.example.smart_dustbin
 
 import io.flutter.embedding.android.FlutterActivity
 

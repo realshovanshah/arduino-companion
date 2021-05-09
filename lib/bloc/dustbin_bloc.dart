@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_weplay/models/image_model.dart';
-import 'package:task_weplay/services/dustbin_service.dart';
+import 'package:smart_dustbin/models/image_model.dart';
+import 'package:smart_dustbin/services/dustbin_service.dart';
 
 part 'dustin_event.dart';
 part 'dustbin_state.dart';
