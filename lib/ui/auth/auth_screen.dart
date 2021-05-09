@@ -52,17 +52,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
       try {
         String userId;
-        if (_formType == FormType.login) {
+        if (_formType == FormType.register) {
           if (_dustbinId == '2389') {
-            userId =
-                await widget.auth.signIn(userModel.email, userModel.password);
+            userId = await widget.auth.createUser(userModel);
           } else {
             setState(() {
               _authHint = 'No dustbin with id $_dustbinId found';
             });
           }
         } else {
-          userId = await widget.auth.createUser(userModel);
+          userId =
+              await widget.auth.signIn(userModel.email, userModel.password);
         }
         setState(() {
           _authHint = 'Signed In\n\nUser id: $userId';
