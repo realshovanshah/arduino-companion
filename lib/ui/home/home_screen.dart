@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -108,7 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       ProfileScreen(userModel: userModel),
       // Container(),
-      DefaultScreen(),
+      DefaultScreen(
+        firebaseRef: FirebaseDatabase.instance.reference(),
+      ),
       DustbinScreen(),
     ];
   }

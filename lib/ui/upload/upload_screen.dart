@@ -35,7 +35,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       setState(() {
                         uploading = true;
                       });
-                      (widget.text == 'Add Images')
+                      (widget.text == 'Add a Dustbin!')
                           ? imageBloc.add(ImageAddedEvent(_images))
                           : imageBloc.add(ImageUpdatedEvent(
                               _images,

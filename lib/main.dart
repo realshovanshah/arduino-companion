@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 60), (t) => dustbinFullCallback());
+    // Timer.periodic(Duration(seconds: 60), (t) => dustbinFullCallback());
 
     SharedPreferences.getInstance().then((value) => prefs = value);
     return MaterialApp(
