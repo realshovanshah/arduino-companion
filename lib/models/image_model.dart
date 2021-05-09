@@ -7,12 +7,11 @@ class ImageModel extends Equatable {
   final String id;
   final String imageUrl;
   final String fillStatus;
-  final int fillCount;
-  final bool isOpen;
+  final int isFull;
+  final int isOpen;
   bool clicked = false;
 
-  ImageModel(
-      this.id, this.imageUrl, this.fillStatus, this.fillCount, this.isOpen,
+  ImageModel(this.id, this.imageUrl, this.fillStatus, this.isFull, this.isOpen,
       {this.clicked});
 
   Map<String, dynamic> toMap() {
@@ -20,18 +19,18 @@ class ImageModel extends Equatable {
       'id': id,
       'imageUrl': imageUrl,
       'fillStatus': fillStatus,
-      'fillCount': fillCount,
+      'isFull': isFull,
       'isOpen': isOpen,
     };
   }
 
   factory ImageModel.fromMap(Map<String, dynamic> map) {
     return ImageModel(
-      map['id'],
-      map['imageUrl'],
-      map['fillStatus'],
-      map['fillCount'],
-      map['isOpen'],
+      map['id'].toString(),
+      map['url'],
+      map['fill_status'],
+      map['is_full'],
+      map['is_lid_open'],
       clicked: false,
     );
   }
@@ -46,13 +45,12 @@ class ImageModel extends Equatable {
       snap['id'],
       snap['imageUrl'],
       snap['fillStatus'],
-      snap['fillCount'],
+      snap['isFull'],
       snap['isOpen'],
       clicked: false,
     );
   }
 
   @override
-  List<Object> get props =>
-      [id, imageUrl, fillStatus, fillCount, isOpen, clicked];
+  List<Object> get props => [id, imageUrl, fillStatus, isFull, isOpen, clicked];
 }

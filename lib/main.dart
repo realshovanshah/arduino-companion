@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -40,12 +41,17 @@ class MyApp extends StatelessWidget {
   final noti = NotificationPlugin();
 
   void dustbinFullCallback() {
-    noti.show(11, 'title', 'dustbin');
+    ImageService.getDustbin(FirebaseDatabase.instance.reference()).then(
+      (value) => (value.isFull == 1)
+          ? noti.show(
+              11, 'Dustbin Alert', 'Your Dustbin is full. Take out the trash!')
+          : print('failed'),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Timer.periodic(Duration(seconds: 60), (t) => dustbinFullCallback());
+    Timer.periodic(Duration(seconds: 30), (t) => dustbinFullCallback());
 
     SharedPreferences.getInstance().then((value) => prefs = value);
     return MaterialApp(

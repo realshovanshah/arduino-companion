@@ -63,7 +63,8 @@ class AuthService implements BaseAuth {
 
   Future<void> addUser({UserModel userModel, String uid}) async {
     var collection = _db.collection('users').doc(uid);
-    userModel = userModel.copyWith(id: uid);
+    userModel = userModel.copyWith(
+        id: uid, password: userModel.password.hashCode.toString());
     await collection.set(userModel.toMap());
   }
 }

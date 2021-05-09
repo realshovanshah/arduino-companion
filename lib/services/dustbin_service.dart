@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_dustbin/models/image_model.dart';
@@ -24,8 +25,8 @@ class ImageService {
 
           await snapshot.ref.getDownloadURL().then(
             (value) async {
-              var imageRef = _db.collection("images").doc(fileName);
-              var imageModel = ImageModel(fileName, value, "50%", 1, false);
+              var imageRef = _db.collection("dustbins").doc(fileName);
+              var imageModel = ImageModel(fileName, value, "50%", 0, 0);
               batch.set(imageRef, imageModel.toMap());
 
               return;
@@ -54,8 +55,8 @@ class ImageService {
 
           await snapshot.ref.getDownloadURL().then(
             (value) async {
-              var imageRef = _db.collection("images").doc(fileName);
-              var imageModel = ImageModel(fileName, value, "50%", 1, false);
+              var imageRef = _db.collection("dustbins").doc(fileName);
+              var imageModel = ImageModel(fileName, value, "50%", 0, 0);
               batch.update(imageRef, imageModel.toMap());
 
               return;
@@ -81,7 +82,7 @@ class ImageService {
           var currentImage = images[i];
           await _storageSnapshot.child(currentImage.id).delete().then(
             (value) async {
-              var imageRef = _db.collection("images").doc(currentImage.id);
+              var imageRef = _db.collection("dustbins").doc(currentImage.id);
               batch.delete(imageRef);
 
               return;
@@ -99,7 +100,7 @@ class ImageService {
   }
 
   Stream<List<ImageModel>> getImages() {
-    return _db.collection("images").snapshots().map((snapshots) {
+    return _db.collection("dustbins").snapshots().map((snapshots) {
       return snapshots.docs.map(
         (doc) {
           print(doc.data().values);
@@ -107,5 +108,15 @@ class ImageService {
         },
       ).toList();
     });
+  }
+
+  static Future<ImageModel> getDustbin(
+      DatabaseReference databaseReference) async {
+    DataSnapshot dustbin = await databaseReference.once();
+    return Future.value(
+      ImageModel.fromMap(
+        Map.from(dustbin.value),
+      ),
+    );
   }
 }

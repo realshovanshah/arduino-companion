@@ -222,8 +222,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: (_formType == FormType.login)
                               ? usernameAndPassword() + submitWidgets()
-                              : usernameAndPassword() +
+                              : nameWidget() +
+                                  usernameAndPassword() +
                                   dustbinIdWidget() +
+                                  addressWidget() +
+                                  contactWidget() +
                                   submitWidgets()),
                     )),
               ]),
