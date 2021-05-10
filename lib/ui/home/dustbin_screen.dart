@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_dustbin/bloc/dustbin_bloc.dart';
 import 'package:smart_dustbin/models/image_model.dart';
 import 'package:smart_dustbin/services/auth_service.dart';
@@ -94,13 +95,21 @@ class _DustbinScreenState extends State<DustbinScreen> {
                                     return SliverList(
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
-                                          return ImageListItem(
-                                            imageModel: snapshot.data[index],
-                                            selectedItems: _selectedItems,
-                                            selectedImageList:
-                                                _selectedImageList,
-                                            index: index,
-                                          );
+                                          return FutureBuilder<String>(
+                                              future: SharedPreferences
+                                                      .getInstance()
+                                                  .then((value) => value
+                                                      .getString('dustbinId')),
+                                              builder: (context, future) {
+                                                return ImageListItem(
+                                                  imageModel:
+                                                      snapshot.data[index],
+                                                  selectedItems: _selectedItems,
+                                                  selectedImageList:
+                                                      _selectedImageList,
+                                                  index: int.parse(future.data),
+                                                );
+                                              });
                                         },
                                         childCount: snapshot.data.length,
                                       ),

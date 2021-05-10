@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_dustbin/bloc/dustbin_bloc.dart';
 import 'package:smart_dustbin/utilities/utils.dart';
 
@@ -16,9 +19,13 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
+  static final formKey = GlobalKey<FormState>();
+
   bool uploading = false;
   final picker = ImagePicker();
   List<File> _images = [];
+
+  String _did;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +99,91 @@ class _UploadScreenState extends State<UploadScreen> {
   }
 
   chooseImage() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: SizedBox(
+            height: 300,
+            child: AlertDialog(
+              content: Center(
+                child: Form(
+                  key: formKey,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Padding(
+                        padding:
+                            EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  'Dustbin Id',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Flexible(
+                            child: TextFormField(
+                              onChanged: (value) => _did = value,
+                              validator: (val) =>
+                                  val.isEmpty ? 'Id can\'t be empty.' : null,
+                              decoration: const InputDecoration(
+                                hintText: "Enter your dustbin Id",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        FlatButton(
+                            child: const Text('CANCEL'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                        FlatButton(
+                            child: const Text('DONE'),
+                            onPressed: () {
+                              if (validateAndSave()) {
+                                SharedPreferences.getInstance().then(
+                                  (value) => {
+                                    value.setString('dustbinId', _did),
+                                    print(value.getString('dustbinId')),
+                                  },
+                                );
+
+                                getImage()
+                                    .then((value) => {Navigator.pop(context)});
+                              }
+                            }),
+                      ],
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future getImage() async {
     await Permission.storage.request();
 
     var permissionStatus = await Permission.storage.status;
@@ -105,6 +197,15 @@ class _UploadScreenState extends State<UploadScreen> {
     } else {
       print("not granted permissions");
     }
+  }
+
+  bool validateAndSave() {
+    final form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }
 
