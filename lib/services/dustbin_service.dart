@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_dustbin/models/image_model.dart';
 import 'package:smart_dustbin/utilities/constants.dart';
 
@@ -26,7 +27,9 @@ class ImageService {
           await snapshot.ref.getDownloadURL().then(
             (value) async {
               var imageRef = _db.collection("dustbins").doc(fileName);
-              var imageModel = ImageModel(fileName, value, "50%", 0, 0);
+              var id = await SharedPreferences.getInstance()
+                  .then((value) => value.getString('dustbinId'));
+              var imageModel = ImageModel(id, value, "50%", 0, 0);
               batch.set(imageRef, imageModel.toMap());
 
               return;

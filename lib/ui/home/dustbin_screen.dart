@@ -95,21 +95,14 @@ class _DustbinScreenState extends State<DustbinScreen> {
                                     return SliverList(
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
-                                          return FutureBuilder<String>(
-                                              future: SharedPreferences
-                                                      .getInstance()
-                                                  .then((value) => value
-                                                      .getString('dustbinId')),
-                                              builder: (context, future) {
-                                                return ImageListItem(
-                                                  imageModel:
-                                                      snapshot.data[index],
-                                                  selectedItems: _selectedItems,
-                                                  selectedImageList:
-                                                      _selectedImageList,
-                                                  index: int.parse(future.data),
-                                                );
-                                              });
+                                          return ImageListItem(
+                                            imageModel: snapshot.data[index],
+                                            selectedItems: _selectedItems,
+                                            selectedImageList:
+                                                _selectedImageList,
+                                            index: int.parse(
+                                                snapshot.data[index].id),
+                                          );
                                         },
                                         childCount: snapshot.data.length,
                                       ),
@@ -308,7 +301,7 @@ class _ImageListItemState extends State<ImageListItem> {
                 Text(
                   "${widget.index}",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
               ],
